@@ -18,7 +18,7 @@ const SiteHeader = () => {
       title={<SiteTitle />}
     >
       <Text italic>
-        Generate an instant word cloud plot
+        Generate an instant word cloud plot and download as PNG
       </Text>
     </Card>
   )

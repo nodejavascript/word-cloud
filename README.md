@@ -1,6 +1,6 @@
 # word-cloud
 
-Generate an instant word cloud plot
+Generate an instant word cloud plot and download as PNG
 
 ## Attribution
 
