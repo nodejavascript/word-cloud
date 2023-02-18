@@ -7,7 +7,7 @@
     "type": "git",
     "url": "git@github.com:nodejavascript/word-cloud.git"
   },
-  "author": "",
+  "author": "nodejsjavascript@gmail.com",
   "license": "SEE LICENSE",
   "private": true,
   "dependencies": {

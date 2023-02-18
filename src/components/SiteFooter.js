@@ -5,11 +5,6 @@ const { Link } = Typography
 
 const notes = [
   {
-    title: '100% Private',
-    href: 'https://github.com/nodejavascript/word-cloud/blob/master/package.json',
-    linkText: 'No Google Anayltics. No Ads.'
-  },
-  {
     title: 'GitHub',
     href: 'https://github.com/nodejavascript/word-cloud',
     linkText: 'Readme'
