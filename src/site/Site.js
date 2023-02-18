@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import ReactGA from 'react-ga4'
 
 import { Space } from 'antd'
 
@@ -9,7 +10,13 @@ const Site = () => {
   const [wordCloudData, setWordCloudData] = useState()
 
   useEffect(() => {
-    if (wordCloudData) window.scrollTo({ top: 0, behavior: 'smooth' })
+    if (wordCloudData) {
+      ReactGA.event({
+        category: 'UI',
+        action: 'submission changed'
+      })
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   }, [wordCloudData])
 
   return (

@@ -1,4 +1,5 @@
 import React, { createRef } from 'react'
+import ReactGA from 'react-ga4'
 
 import { saveSvgAsPng } from 'save-svg-as-png'
 
@@ -41,6 +42,10 @@ const WordCloudPlot = ({ wordCloudData }) => {
   const wordcloudRef = createRef()
 
   const handleSave = () => {
+    ReactGA.event({
+      category: 'UI',
+      action: 'download png'
+    })
     const svgElement = wordcloudRef.current.querySelector('svg')
     saveSvgAsPng(svgElement, returnFilename())
   }

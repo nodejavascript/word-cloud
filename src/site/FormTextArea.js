@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactGA from 'react-ga4'
 
 import { extract } from 'words-n-numbers'
 
@@ -21,11 +22,30 @@ const FormTextArea = ({ setWordCloudData }) => {
   const [form] = Form.useForm()
 
   const onFinish = ({ paragraph }) => {
-    if (!paragraph) return message.error('Submit something')
+    if (!paragraph) {
+      ReactGA.event({
+        category: 'UI',
+        action: 'onFinish error'
+      })
+
+      return message.error('Submit something')
+    }
+
+    ReactGA.event({
+      category: 'UI',
+      action: 'onFinish submission'
+    })
+
     setWordCloudData(returnAntDWordCloudData(paragraph))
   }
 
-  const onClearForm = () => form.resetFields()
+  const onClearForm = () => {
+    ReactGA.event({
+      category: 'UI',
+      action: 'resetFields'
+    })
+    return form.resetFields()
+  }
 
   return (
     <Form
