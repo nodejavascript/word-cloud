@@ -11,12 +11,19 @@ Too many sites do this with
 - ads
 - encouraging sign ups
 - affiliate links
-- tracking
 
 ## The solution
-  - paste a paragraph
-  - weight of words are based on distribution count
-  - click to download as PDF
+- paste a paragraph
+- weight of words are based on distribution count
+- click to download as PDF
+
+## Full disclosure
+I have added google analytics because
+  - if this sites gets some usage, I will be encourage to add feature
+  - if features are used, I will enhance features
+
+I will be measuring page views and button clicks ONLY. I am not interested in the content you submit, period!
+
 
 ## Free and open-source software
 [![go to word-cloud](https://res.cloudinary.com/nodejavascript-com/image/upload/v1676570659/word-cloud/Selection_020_prc6jp.png)](https://word-cloud.nodejavascript.com)
