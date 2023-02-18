@@ -40,7 +40,7 @@ const FormTextArea = ({ setWordCloudData }) => {
         label='Paste paragraph(s)'
         name='paragraph'
       >
-        <TextArea rows={16} />
+        <TextArea rows={8} />
       </Form.Item>
 
       <Button type='primary' htmlType='submit'>
