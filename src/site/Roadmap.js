@@ -5,12 +5,13 @@ import { DownOutlined } from '@ant-design/icons'
 import { Timeline, Card, Dropdown, Space, Button } from 'antd'
 
 const Links = () => {
-  const onClick = title => {
+  const onClick = (title, href) => {
     ReactGA.event({
       category: 'UI',
       action: `roadmap link: ${title}`,
       label: title
     })
+    window.open(href, '_blank')
   }
 
   const links = [
@@ -38,7 +39,7 @@ const Links = () => {
       ...links.map(({ title, href }) => {
         return {
           key: title,
-          label: <Button type='link' href={href} target='_blank' onClick={() => onClick(title)}>{title}</Button>
+          label: <Button type='link' onClick={() => onClick(title, href)}>{title}</Button>
         }
       })
     ]
@@ -49,12 +50,12 @@ const Links = () => {
       menu={menu}
       trigger={['click']}
     >
-      <a onClick={(e) => e.preventDefault()}>
+      <Button type='link' onClick={(e) => e.preventDefault()}>
         <Space>
           github
           <DownOutlined />
         </Space>
-      </a>
+      </Button>
     </Dropdown>
   )
 }

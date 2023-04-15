@@ -1,42 +1,52 @@
-import React from 'react'
-import ReactGA from 'react-ga4'
+import React, { useEffect } from 'react'
+import { gql, useMutation } from '@apollo/client'
 
-import { extract } from 'words-n-numbers'
+import ReactGA from 'react-ga4'
 
 import { Button, Form, Input, message } from 'antd'
 
 const { TextArea } = Input
 
-const returnAntDWordCloudData = paragraph => {
-  const wordsArray = extract(paragraph)
-
-  return [...new Set(wordsArray)].map(word => {
-    return {
-      word,
-      value: wordsArray.filter(i => i === word).length
+const MUTATION_WORD_CLOUD_PARAGRAPH = gql`
+  mutation mutationWordCloudParagaraph ($wordCloudParagaraphInput: WordCloudParagaraphInput!) {
+    wordCloudParagaraph (wordCloudParagaraphInput: $wordCloudParagaraphInput ) {
+      word
+      value
     }
-  })
-}
+  }
+`
 
 const FormTextArea = ({ setWordCloudData }) => {
   const [form] = Form.useForm()
 
-  const onFinish = ({ paragraph }) => {
-    if (!paragraph) {
+  const [mutationWordCloudParagaraph, { error, data }] = useMutation(MUTATION_WORD_CLOUD_PARAGRAPH)
+
+  useEffect(() => {
+    if (data?.wordCloudParagaraph) setWordCloudData(data.wordCloudParagaraph)
+  }, [data, setWordCloudData])
+
+  useEffect(() => {
+    if (error?.message) {
+      message.error(error.message)
       ReactGA.event({
         category: 'UI',
-        action: 'onFinish error'
+        action: 'onFinish error',
+        label: error.message
       })
-
-      return message.error('Submit something')
     }
+  }, [error])
 
+  const onFinish = ({ paragraph }) => {
     ReactGA.event({
       category: 'UI',
       action: 'onFinish submission'
     })
 
-    setWordCloudData(returnAntDWordCloudData(paragraph))
+    mutationWordCloudParagaraph({
+      variables: {
+        wordCloudParagaraphInput: { paragraph }
+      }
+    })
   }
 
   const onClearForm = () => {
