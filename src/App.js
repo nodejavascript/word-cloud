@@ -3,7 +3,7 @@ import ReactGA from 'react-ga4'
 
 import './App.css'
 
-import SiteWrapper from './components/SiteWrapper'
+import SiteWrapper from './layout/SiteWrapper'
 import Site from './site/Site'
 
 const { REACT_APP_MEASUREMENT_ID } = process.env
