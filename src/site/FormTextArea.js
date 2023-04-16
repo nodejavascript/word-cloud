@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
 
 import ReactGA from 'react-ga4'
 
-import { Button, Form, Input, message } from 'antd'
+import { Button, Form, Input, message, Checkbox } from 'antd'
 
 const { TextArea } = Input
 
@@ -18,6 +18,7 @@ const MUTATION_WORD_CLOUD_PARAGRAPH = gql`
 
 const FormTextArea = ({ setWordCloudData }) => {
   const [form] = Form.useForm()
+  const [reducewords, setReducewords] = useState(true)
 
   const [mutationWordCloudParagaraph, { error, data }] = useMutation(MUTATION_WORD_CLOUD_PARAGRAPH)
 
@@ -44,7 +45,7 @@ const FormTextArea = ({ setWordCloudData }) => {
 
     mutationWordCloudParagaraph({
       variables: {
-        wordCloudParagaraphInput: { paragraph }
+        wordCloudParagaraphInput: { paragraph, reducewords }
       }
     })
   }
@@ -71,6 +72,10 @@ const FormTextArea = ({ setWordCloudData }) => {
         name='paragraph'
       >
         <TextArea rows={8} />
+      </Form.Item>
+
+      <Form.Item>
+        <Checkbox checked={reducewords} onClick={() => setReducewords(!reducewords)}>Reduce words</Checkbox>
       </Form.Item>
 
       <Button type='primary' htmlType='submit'>

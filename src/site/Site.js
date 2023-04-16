@@ -5,7 +5,6 @@ import { Space } from 'antd'
 
 import WordCloudPlot from './WordCloudPlot'
 import FormTextArea from './FormTextArea'
-import Roadmap from './Roadmap'
 
 const Site = () => {
   const [wordCloudData, setWordCloudData] = useState()
@@ -24,7 +23,6 @@ const Site = () => {
     <Space direction='vertical' size='large' style={{ display: 'flex' }}>
       <WordCloudPlot wordCloudData={wordCloudData} />
       <FormTextArea setWordCloudData={setWordCloudData} />
-      <Roadmap />
     </Space>
   )
 }
