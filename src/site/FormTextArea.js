@@ -20,7 +20,7 @@ const FormTextArea = ({ setWordCloudData }) => {
   const [form] = Form.useForm()
   const [reducewords, setReducewords] = useState(true)
 
-  const [mutationWordCloudParagaraph, { error, data }] = useMutation(MUTATION_WORD_CLOUD_PARAGRAPH)
+  const [mutationWordCloudParagaraph, { error, data, loading }] = useMutation(MUTATION_WORD_CLOUD_PARAGRAPH)
 
   useEffect(() => {
     if (data?.wordCloudParagaraph) setWordCloudData(data.wordCloudParagaraph)
@@ -37,7 +37,7 @@ const FormTextArea = ({ setWordCloudData }) => {
     }
   }, [error])
 
-  const onFinish = ({ paragraph }) => {
+  const onFinish = ({ paragraph, youtubeUri }) => {
     ReactGA.event({
       category: 'UI',
       action: 'onFinish submission'
@@ -45,7 +45,7 @@ const FormTextArea = ({ setWordCloudData }) => {
 
     mutationWordCloudParagaraph({
       variables: {
-        wordCloudParagaraphInput: { paragraph, reducewords }
+        wordCloudParagaraphInput: { paragraph, youtubeUri, reducewords }
       }
     })
   }
@@ -68,17 +68,24 @@ const FormTextArea = ({ setWordCloudData }) => {
     >
 
       <Form.Item
+        label='Youtube (link) to plot video transcript'
+        name='youtubeUri'
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
         label='Paste paragraph(s)'
         name='paragraph'
       >
-        <TextArea rows={8} />
+        <TextArea rows={5} />
       </Form.Item>
 
       <Form.Item>
         <Checkbox checked={reducewords} onClick={() => setReducewords(!reducewords)}>Reduce words</Checkbox>
       </Form.Item>
 
-      <Button type='primary' htmlType='submit'>
+      <Button type='primary' htmlType='submit' loading={loading}>
         Submit
       </Button>
 
