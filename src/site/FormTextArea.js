@@ -8,10 +8,17 @@ import { Button, Form, Input, message, Checkbox } from 'antd'
 const { TextArea } = Input
 
 const MUTATION_WORD_CLOUD_PARAGRAPH = gql`
-  mutation mutationWordCloudParagaraph ($wordCloudParagaraphInput: WordCloudParagaraphInput!) {
-    wordCloudParagaraph (wordCloudParagaraphInput: $wordCloudParagaraphInput ) {
-      word
-      value
+  mutation mutationWordCloudSubmission ($wordCloudSubmissionInput: WordCloudSubmissionInput!) {
+    wordCloudSubmission (wordCloudSubmissionInput: $wordCloudSubmissionInput ) {
+      meta {
+        totalWordsCount
+        uniqueWordsCount
+        uniqueWordsFilteredCount
+      }
+      uniqueWordsFiltered {
+        word
+        value
+      }
     }
   }
 `
@@ -19,11 +26,13 @@ const MUTATION_WORD_CLOUD_PARAGRAPH = gql`
 const FormTextArea = ({ setWordCloudData }) => {
   const [form] = Form.useForm()
   const [reducewords, setReducewords] = useState(true)
+  const [removeAdjectives, setRemoveAdjectives] = useState(true)
+  const [removeCommon, setRemoveCommon] = useState(true)
 
-  const [mutationWordCloudParagaraph, { error, data, loading }] = useMutation(MUTATION_WORD_CLOUD_PARAGRAPH)
+  const [mutationWordCloudSubmission, { error, data, loading }] = useMutation(MUTATION_WORD_CLOUD_PARAGRAPH)
 
   useEffect(() => {
-    if (data?.wordCloudParagaraph) setWordCloudData(data.wordCloudParagaraph)
+    if (data?.wordCloudSubmission) setWordCloudData(data.wordCloudSubmission)
   }, [data, setWordCloudData])
 
   useEffect(() => {
@@ -43,9 +52,9 @@ const FormTextArea = ({ setWordCloudData }) => {
       action: 'onFinish submission'
     })
 
-    mutationWordCloudParagaraph({
+    mutationWordCloudSubmission({
       variables: {
-        wordCloudParagaraphInput: { paragraph, youtubeUri, reducewords }
+        wordCloudSubmissionInput: { paragraph, youtubeUri, reducewords, removeAdjectives, removeCommon }
       }
     })
   }
@@ -83,6 +92,17 @@ const FormTextArea = ({ setWordCloudData }) => {
 
       <Form.Item>
         <Checkbox checked={reducewords} onClick={() => setReducewords(!reducewords)}>Reduce words</Checkbox>
+        <Button type='link' onClick={() => window.open('https://github.com/Lissy93/remove-words/blob/master/words.txt', '_blank')}>more info...</Button>
+      </Form.Item>
+
+      <Form.Item>
+        <Checkbox checked={removeAdjectives} onClick={() => setRemoveAdjectives(!removeAdjectives)}>Remove adjectives</Checkbox>
+        <Button type='link' onClick={() => window.open('https://github.com/rgbkrk/adjectives/blob/master/index.js', '_blank')}>more info...</Button>
+      </Form.Item>
+
+      <Form.Item>
+        <Checkbox checked={removeCommon} onClick={() => setRemoveCommon(!removeCommon)}>Remove common words </Checkbox>
+        <Button type='link' onClick={() => window.open('https://github.com/jonschlinkert/common-words/blob/master/words.json', '_blank')}>more info...</Button>
       </Form.Item>
 
       <Button type='primary' htmlType='submit' loading={loading}>
@@ -90,7 +110,7 @@ const FormTextArea = ({ setWordCloudData }) => {
       </Button>
 
       <Button type='link' danger onClick={onClearForm}>
-        Clear form
+        Reset form
       </Button>
 
     </Form>

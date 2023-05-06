@@ -12,11 +12,11 @@ const returnFilename = () => {
   return `word-cloud-nodejavascript-${date}.png`
 }
 
-const WordCloudPlot = ({ wordCloudData }) => {
-  if (!wordCloudData) return null
+const WordCloudPlot = ({ data }) => {
+  if (!data) return null
 
   const config = {
-    data: wordCloudData,
+    data,
     wordField: 'word',
     weightField: 'value',
     colorField: 'word',

@@ -3,6 +3,7 @@ import ReactGA from 'react-ga4'
 
 import { Space } from 'antd'
 
+import WordCloudStats from './WordCloudStats'
 import WordCloudPlot from './WordCloudPlot'
 import FormTextArea from './FormTextArea'
 
@@ -21,7 +22,8 @@ const Site = () => {
 
   return (
     <Space direction='vertical' size='large' style={{ display: 'flex' }}>
-      <WordCloudPlot wordCloudData={wordCloudData} />
+      <WordCloudStats meta={wordCloudData?.meta} />
+      <WordCloudPlot data={wordCloudData?.uniqueWordsFiltered} />
       <FormTextArea setWordCloudData={setWordCloudData} />
     </Space>
   )
